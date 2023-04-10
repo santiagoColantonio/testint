@@ -1,1 +1,9 @@
-return 1
+from fastapi import FastAPI
+import subprocess
+
+app = FastAPI()
+
+@app.post("/run_python_file")
+async def run_python_file(num1: int, num2: int):
+    result = subprocess.run(['python', 'path/to/your/python/file.py', str(num1), str(num2)], capture_output=True)
+    return {"message": "Python file executed successfully.", "result": result.stdout.decode('utf-8')}
